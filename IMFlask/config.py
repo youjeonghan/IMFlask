@@ -1,0 +1,76 @@
+import os
+from logging.config import dictConfig
+
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config:
+    SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'hard to guess string')
+    TEST_ACCESS_TOKEN = os.environ.get('FLASK_TEST_ACCESS_TOKEN')
+
+    if os.environ.get('FLASK_MYSQL') == 'true':
+        MYSQL_URI = os.environ.get('FLASK_MYSQL_URI')
+        MYSQL_DB_NAME = os.environ.get('FLASK_MYSQL_DB_NAME')
+
+    if os.environ.get('FLASK_MONGO') == 'true':
+        MONGO_URI = os.environ.get('FLASK_MONGO_URI')
+        MONGO_DB_NAME = os.environ.get('FLASK_MONGO_DB_NAME')
+
+    if os.environ.get('FLASK_REDIS') == 'true':
+        REDIS_HOST = os.environ.get('FLASK_REDIS_HOST')
+        REDIS_PW = os.environ.get('FLASK_REDIS_PW')
+
+    SLOW_QUERY_TIME = 0.5
+
+    @staticmethod
+    def init_app(app):
+        pass
+
+
+class TestingConfig(Config):
+    DEBUG = True
+    TESTING = True
+
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+    TESTING = False
+
+
+class ProductionConfig(Config):
+    DEBUG = False
+    TESTING = False
+
+    @staticmethod
+    def init_app(app):
+        dictConfig({
+            'version': 1,
+            'formatters': {
+                'default': {
+                    'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+                }
+            },
+            'handlers': {
+                'file': {
+                    'level': 'INFO',
+                    'class': 'logging.handlers.RotatingFileHandler',
+                    'filename': './server_error.log',
+                    'maxBytes': 1024 * 1024 * 5,
+                    'backupCount': 5,
+                    'formatter': 'default',
+                },
+            },
+            'root': {
+                'level': 'INFO',
+                'handlers': ['file']
+            }
+        })
+
+
+config = {
+    'development':DevelopmentConfig,
+    'production':ProductionConfig,
+    'testing':TestingConfig,
+
+    'default':DevelopmentConfig,
+}
