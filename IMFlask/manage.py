@@ -15,7 +15,7 @@ def make_shell_context():
 
 
 @app.cli.command()
-def db_init(init):
+def db_init():
     init_app()
 
 

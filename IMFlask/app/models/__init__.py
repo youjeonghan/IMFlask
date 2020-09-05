@@ -7,7 +7,7 @@ from app.models.mongodb import mongo_init
 from app.models.redis import redis_init
 
 
-def init_app():
+def init_app(app):
     mysql_init()
     sys.stdout.write("Mysql init...OK" + "\n")
     mongo_init()
