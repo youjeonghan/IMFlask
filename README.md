@@ -18,6 +18,8 @@ Large Scale Web Backend Structure for Flask
 - FLASK_REDIS_PW
 
 - FLASK_CONFIG
+- FLASK_ENV
+- FLASK_APP
 
 
 # Directories
@@ -43,12 +45,17 @@ IMFlask/
 	
 	app/
 		__init__.py
+		decorator.py
+		
 		client/
 			*front-end/
+		
 		templates/
 			*.html
+		
 		static/
 			*static_files
+		
 		models/
 			__init__.py
 			/mysql
@@ -63,9 +70,11 @@ IMFlask/
 				__init__.py
 				db.py
 				*model.py
+		
 		controllers/
 				__init__.py
 				*controller.py
+		
 		api/
 			__init__.py		
 			v1/

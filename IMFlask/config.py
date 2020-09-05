@@ -1,3 +1,6 @@
+'''
+Flask Application Config
+'''
 import os
 from logging.config import dictConfig
 
@@ -18,8 +21,10 @@ class Config:
 
     if os.environ.get('FLASK_REDIS') == 'true':
         REDIS_HOST = os.environ.get('FLASK_REDIS_HOST')
+        REDIS_PORT = os.environ.get('FLASK_REDIS_PORT')
         REDIS_PW = os.environ.get('FLASK_REDIS_PW')
 
+    ALLOWED_EXTENSION = {'txt', 'docs', 'md', 'hwp', 'ppt', 'pptx'}
     SLOW_QUERY_TIME = 0.5
 
     @staticmethod
