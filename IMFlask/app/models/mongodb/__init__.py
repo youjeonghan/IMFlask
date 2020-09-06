@@ -43,7 +43,6 @@ def mongo_init():
         upsert=True)
 
     col = cur[db_name]['user']
-    print(current_app.config)
     col.update_one(
         {"user_id": current_app.config['ADMIN_ID']},
         {

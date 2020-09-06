@@ -12,7 +12,7 @@ class Config:
     TEST_ACCESS_TOKEN = os.environ.get('FLASK_TEST_ACCESS_TOKEN')
 
     ADMIN_ID = os.environ.get('FLASK_ADMIN_ID', "iml")
-    ADMIN_PW = os.environ.get('FlASK_ADMIN_PW', "iml")
+    ADMIN_PW = os.environ.get('FLASK_ADMIN_PW', "iml")
 
     MYSQL_URI = os.environ.get('FLASK_MYSQL_URI')
 
@@ -21,6 +21,7 @@ class Config:
 
     REDIS_HOST = os.environ.get('FLASK_REDIS_HOST')
     REDIS_PORT = os.environ.get('FLASK_REDIS_PORT')
+    REDIS_PW = os.environ.get('FLASK_REDIS_PW')
 
     ALLOWED_EXTENSION = {'txt', 'docs', 'md', 'hwp', 'ppt', 'pptx'}
     SLOW_API_TIME = 0.5

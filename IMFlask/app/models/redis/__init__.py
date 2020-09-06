@@ -15,8 +15,8 @@ def get_redis_cur(store_g=False):
     '''
     redis_cur = Redis(
         host=current_app.config['REDIS_HOST'],
-        port=current_app.config['REDIS_PORT'],)
-        #password=current_app.config['REDIS_PW'])
+        port=current_app.config['REDIS_PORT'],
+        password=current_app.config['REDIS_PW'])
 
     if store_g:
         g.redis_cur = redis_cur
