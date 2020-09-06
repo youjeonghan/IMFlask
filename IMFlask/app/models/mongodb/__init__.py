@@ -43,6 +43,7 @@ def mongo_init():
         upsert=True)
 
     col = cur[db_name]['user']
+    print(current_app.config['ADMIN_PW'])
     col.update_one(
         {"user_id": current_app.config['ADMIN_ID']},
         {
@@ -53,8 +54,5 @@ def mongo_init():
         },
         upsert=True
     )
-    model = User(cur)
-    model.create_user("iml",
-                      generate_password_hash("iml"))
 
     cur.close()
