@@ -3,25 +3,26 @@ import click
 import unittest
 from app import create_app
 from app.models import init_app
-from app.models.mongo.db import get_cur
+from app.models.mongodb import get_mongo_cur
 
 
-app = create_app(os.getenv('FLASK_CONFIG', 'default'))
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 
 @app.shell_context_processor
 def make_shell_context():
-    return dict(mongo_cli=get_cur())
+    return dict(mongo_cli=get_mongo_cur())
 
 
 @app.cli.command()
 def db_init():
-    init_app()
+    """First, run the Database init modules."""
+    init_app(app)
 
 
 @app.cli.command()
 @click.argument('test_names', nargs=-1)
-def test(db, test_names):
+def test(test_names):
     """Run the unit tests."""
     if test_names:
         tests = unittest.TestLoader().loadTestsFromNames(test_names)

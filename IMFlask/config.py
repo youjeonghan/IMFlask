@@ -11,18 +11,19 @@ class Config:
     SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'hard to guess string')
     TEST_ACCESS_TOKEN = os.environ.get('FLASK_TEST_ACCESS_TOKEN')
 
+    ADMIN_ID = os.environ.get('FLASK_ADMIN_ID')
+    ADMIN_PW = os.environ.get('FlASK_ADMIN_PW')
+
     MYSQL_URI = os.environ.get('FLASK_MYSQL_URI')
-    MYSQL_DB_NAME = os.environ.get('FLASK_MYSQL_DB_NAME')
 
     MONGO_URI = os.environ.get('FLASK_MONGO_URI')
     MONGO_DB_NAME = os.environ.get('FLASK_MONGO_DB_NAME')
 
     REDIS_HOST = os.environ.get('FLASK_REDIS_HOST')
     REDIS_PORT = os.environ.get('FLASK_REDIS_PORT')
-    REDIS_PW = os.environ.get('FLASK_REDIS_PW')
 
     ALLOWED_EXTENSION = {'txt', 'docs', 'md', 'hwp', 'ppt', 'pptx'}
-    SLOW_QUERY_TIME = 0.5
+    SLOW_API_TIME = 0.5
 
     @staticmethod
     def init_app(app):

@@ -41,12 +41,34 @@ def close_mysql_cur():
 
 
 def mysql_init():
-    conn = get_mysql_cur(store_g=False)
+    uri = current_app.config['MYSQL_URI']
+    uri = make_url(uri)
+    conn = pymysql.connect(
+            host=uri.host,
+            port=uri.port,
+            user=uri.username,
+            passwd=uri.password,
+            charset='utf8',
+            cursorclass=pymysql.cursors.DictCursor)
+
     with conn.cursor() as cur:
+        # Create DB
+        sql = 'CREATE DATABASE IF NOT EXISTS imldb default CHARACTER SET UTF8;'
+        cur.execute(sql)
+    conn.commit()
+    conn.select_db("imldb")    
+
+    with conn.cursor() as cur:
+
+        # Create Tables
         for sql in tables:
             cur.execute(sql)
+    conn.commit()
+
+    with conn.cursor() as cur:
+        # Create Test Records
         sql = '''
-            INSERT INTO imltable(author) VALUES ('IML');
+            INSERT INTO master_config(author) VALUES ('IML');
         '''
         cur.execute(sql)
     conn.commit()

@@ -16,7 +16,7 @@ class MasterConfig:
 		return self.cur.fetchone()
 
 	def insert(self, auhtor):
-		sql = "INSERT INTO imltable(author) VALUES (%s);"
+		sql = "INSERT INTO master_config(author) VALUES (%s);"
 		self.cur.execute(sql, (auhtor,))
 
 	def commit(self):

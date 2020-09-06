@@ -20,7 +20,7 @@ def apiv1_get_author_with_mysql():
     # PUT
     data = request.get_json()
     insert_author_with_mysql(g.mysql_cur, 
-                             data['auhtor'])
+                             data['author'])
     return {}, 204
 
 

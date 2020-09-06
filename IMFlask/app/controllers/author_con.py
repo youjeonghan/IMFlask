@@ -21,7 +21,7 @@ def insert_author_with_mysql(mysql_cur, author):
 	model.commit()
 
 
-def get_author_with_redis():
-	model = RedisModel()
-	data = model.get_author()
+def get_author_with_redis(redis_cur):
+	model = RedisModel(redis_cur)
+	data = str(model.get_author())
 	return data
