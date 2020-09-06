@@ -24,7 +24,7 @@ def init_app(app):
 
     @app.teardown_request
     def teardown_request(exception):
-        app.logger.debug("asd")
+        app.logger.warning("asd")
         close_mysql_cur()
         close_mongo_cur()
         close_redis_cur()
