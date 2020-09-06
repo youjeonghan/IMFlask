@@ -11,8 +11,8 @@ class Config:
     SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'hard to guess string')
     TEST_ACCESS_TOKEN = os.environ.get('FLASK_TEST_ACCESS_TOKEN')
 
-    ADMIN_ID = os.environ.get('FLASK_ADMIN_ID')
-    ADMIN_PW = os.environ.get('FlASK_ADMIN_PW')
+    ADMIN_ID = os.environ.get('FLASK_ADMIN_ID', "iml")
+    ADMIN_PW = os.environ.get('FlASK_ADMIN_PW', "iml")
 
     MYSQL_URI = os.environ.get('FLASK_MYSQL_URI')
 
