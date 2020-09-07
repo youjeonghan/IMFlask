@@ -61,20 +61,54 @@ Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니
 
 # Required Environment variable
 
-- FLASK_SECRET_KEY
-- FLASK_TEST_ACCESS_TOKEN
+해당 WAS가 동작하기 위해서는 아래와 같은 환경 변수 설정이 필요합니다.
 
-- FLASK_MYSQL_URI
+Windows의 경우, IMLFlask/requirements/env.bat 을 CLI에서 실행시켜 바로 일관적으로 등록할 수 있습니다.
 
-- FLASK_MONGO_URI
-- FLASK_MONGO_DB_NAME 
+타 OS의 경우, 같은 경로의 env.cfg의 내용을 복사하여 직접 환경 변수를 등록해주셔야 합니다.
 
-- FLASK_REDIS_HOST
-- FLASK_REDIS_PW
+각각의 환경 변수 정보는 다음과 같습니다.
 
-- FLASK_CONFIG
-- FLASK_ENV
-- FLASK_APP
+- **FLASK_SECRET_KEY**
+
+  JWT 인증에 사용되는 secret_key 입니다.
+
+- **FLASK_TEST_ACCESS_TOKEN**
+
+  테스트 프레임워크를 위한 Admin Access Token입니다.
+
+- **FLASK_MYSQL_URI**
+
+  MySQL 서버에 접속하기 위한 Database URI입니다.
+
+- **FLASK_MONGO_URI**
+  MongoDB 서버에 접속하기 위한 Database URI입니다. 
+
+- **FLASK_MONGO_DB_NAME**
+
+  MongoDB에서 사용할 DB 이름입니다. 
+
+- **FLASK_REDIS_HOST**
+
+  Redis 서버의 Host IP입니다.
+
+- **FLASK_REDIS_PW**
+
+  Redis 서버에 접속하기 위한 패스워드입니다.
+
+- **FLASK_CONFIG**
+
+  어떤 config 데이터를 주입시킬지 결정하는 값입니다. (development / production / testing)
+
+- **FLASK_ENV**
+
+  어떠한 환경에서 Flask APP을 실행시킬지 결정하는 값입니다. (development / production)
+
+- **FLASK_APP**
+
+  Flask APP 객체의 위치를 가리키는 값입니다. (manage.py의 app 변수 -> manage:app)
+
+
 
 
 # Directories
@@ -82,66 +116,28 @@ Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니
 /
 .git/
 .gitignore
-requirements.txt
+requirements/
 LICENSE
 README.md
-
 IMFlask/
 	manage.py
 	config.py
-	
 	tests/
-		__init__.py
-		*test_framework.py
-
 	modules/
-		__init__.py
-		*ext_module.py
-	
 	app/
 		__init__.py
 		decorator.py
-		
 		client/
-			*front-end/
-		
 		templates/
-			*.html
-		
 		static/
-			*static_files
-		
 		models/
-			__init__.py
-			/mysql
-				__init__.py
-				db.py
-				*models.py
-			/mongo
-				__init__.py
-				db.py
-				*model.py
-			/redis
-				__init__.py
-				db.py
-				*model.py
-		
+			mongodb/
+			mysql/
+			redis/
 		controllers/
-				__init__.py
-				*controller.py
-		
 		api/
-			__init__.py		
+			auth.py
 			v1/
-				__init__.py
-				*api.py
-			auth/
-				__init__.py
-				*auth_api.py
-			
-			
-		
-
 ```
 
 # References
