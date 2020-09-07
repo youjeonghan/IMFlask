@@ -1,7 +1,7 @@
 # IMFlask
 **Large Scale Web Backend Structure for Flask (Edited at 2020-09-07)** 
 
-공부하는 내용을 정리하는 겸, Flask를 사용하여, 대규모 어플리케이션 서버를 구축한다고 가정했을 때의 baseline 코드를 구현한 것입니다. 
+공부하는 내용을 정리하는 겸, Flask를 사용하여 대규모 어플리케이션 서버를 구축한다고 가정했을 때의 baseline 코드를 구현한 것입니다. 
 
 여러 오픈 소스를 읽어보고 제 몸에 와닿는 직관적인 부분만 반영한 것이라 부족한 점이 많습니다.
 
@@ -15,7 +15,7 @@
 
 
 
-### 가능한 한 Flask Extension을 지양하자
+### Flask Extension을 지양하자
 
 Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니다.
 
@@ -27,7 +27,7 @@ Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니
 
 
 
-### 가능한 한 저수준의 DB 드라이버를 사용하자
+### 저수준의 DB 드라이버를 사용하자
 
 해당 코드는 RDBMS, NoSQL(Document based, Key-value based) 등의 **총 3가지의 DB(MySQL, MongoDB, Redis)**와 연동한 예제 코드가 작성되어 있습니다. 
 
@@ -41,16 +41,21 @@ Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니
 
 ### view 함수가 비대해지는 것을 최대한 막자
 
-모든 웹 어플리케이션 서버는 최종적으로 api 로직을 다루는 view(혹은 route) 함수단이 핵심이 되며, 가장 코드량이 비대해질 수 밖에 없습니다. 따라서 최대한 해당 로직의 코드를 분할시키기 위해, View, Controller, Model로 코드의 특징을 나누어 설계하였습니다. 이럴 경우, 다음과 같은 이점이 발생합니다.
+모든 웹 어플리케이션 서버는 최종적으로 api 로직을 다루는 view(혹은 route) 함수단이 핵심이 되며, 가장 코드의 양이 비대해질 수 밖에 없습니다. 따라서 최대한 해당 로직의 코드를 분할시키기 위해, View, Controller, Model로 코드의 특징을 나누어 설계하였습니다. 이럴 경우, 다음과 같은 이점이 발생합니다.
 
-- View(route) function이 굉장히 심플해집니다. client 단에서 전송된 input Parameters를 받고 validate한 후, Controller 단의 function를 호출해서 반환받은 값을 return하면 끝.
-- 다른 API지만, 종종 같은 query, 같은 로직을 사용하는 경우가 존재합니다. 이 경우, controller를 독립적으로 뽑아내서 각각의 api에 대한 재사용성을 높일 수 있습니다.
-- 저수준의 DB 드라이버를 사용하는 만큼의 코드 사이사이에 query가 난무한다면 굉장히 코드에 대한 가독성이 떨어질 수 있습니다. 따라서 커서를 인자로 받아서 동작하는 커스텀 클래스(유사 모델?)을 구현하여, 최대한 위의 3가지를 분리시키도록 했습니다.
+- **View(route) function**이 굉장히 심플해집니다. client 단에서 전송된 input Parameters를 받고 validate한 후, Controller 단의 function를 호출해서 반환받은 값을 return하면 끝.
+- 다른 API지만, 종종 같은 query, 같은 로직을 사용하는 경우가 존재합니다. 이 경우, **controller**를 독립적으로 뽑아내서 각각의 api에 대한 재사용성을 높일 수 있습니다.
+- 저수준의 DB 드라이버를 사용하는 만큼의 코드 사이사이에 query가 난무한다면 굉장히 코드에 대한 가독성이 떨어질 수 있습니다. 따라서 **커서를 인자로 받아서 동작하는 커스텀 클래스(유사 모델?)을 구현**하여, 최대한 위의 3가지를 분리시키도록 했습니다.
   
 
-### 모든 API에 대한 request/response는 JSON으로만 통신하자
+### 딱히 REST API는 아닙니다
 
-딱히 REST API를 의미하고 있지는 않습니다.
+제가 들은 지식을 바탕으로 가능한한 RESTful스럽게 구현을 해보긴 했습니다만, 역시나 얕게 들은 지식인 만큼 완전하지 않습니다. 다만, 적어도 아래와 같은 규약을 적용해보았습니다.
+
+- 모든 API는 **GET, POST, PUT, DELETE 내에서 규격화하여 url을 단축**시켰습니다.
+- 모든 API의 **request/response의 data tranfer format은 JSON으로 일관적으로 처리**하였습니다.
+
+후에 파일 업로드 처리는 어떻게 할 것이냐는 숙제가 남아있습니다만, 이 경우 예외적으로 multipart/form-data을 활용하거나 다른 방안을 생각해봐야 할 것 같습니다.
 
 
 
