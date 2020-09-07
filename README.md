@@ -110,8 +110,40 @@ Windows의 경우, IMLFlask/requirements/env.bat 을 CLI에서 실행시켜 바�
 
 
 
+# Get Started
+
+아래는 Windows 내에서 실행해볼 경우의 방법입니다. 타 OS에서도 같은 맥락으로 실행시켜주시면 됩니다.
+단, 정상적으로 작동되기 위해서는 MySQL, MongoDB, Redis가 모두 연동이 가능해야 합니다.
+
+```shell
+# In Windows
+$ git clone <IMFlask Repository URL>
+$ cd IMFlask/
+
+# 가상 환경 세팅
+$ python3 -m venv ./venv
+$ ./venv/Script/activate.bat
+
+# 환경 변수 등록
+$ ./requirements/env.bat
+
+# DB init 및 실행
+$ cd IMFlask/
+$ flask db-init
+$ flask run 
+
+# App Test
+$ flask test
+```
+
+
+
+
 
 # Directories
+
+해당 코드는 다음과 같은 디렉터리 구조를 가집니다.
+
 ```
 /
 .git/
@@ -140,7 +172,18 @@ IMFlask/
 			v1/
 ```
 
+- manage.py
+- config.py
+- app/__ init __.py
+- app/templates, app/static, app/client
+- app/api/
+- app/controllers/
+- app/models/
+
+
+
 # References
+
 https://github.com/JoMingyu/Flask-Large-Application-Example
 
 https://github.com/miguelgrinberg/flasky
