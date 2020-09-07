@@ -140,8 +140,13 @@ $ flask run
 # App Test
 $ flask test
 ```
+![image](https://user-images.githubusercontent.com/29897277/92383059-a536e900-f148-11ea-9e3d-3168d2a48241.png)
 
+![image](https://user-images.githubusercontent.com/29897277/92383045-9e0fdb00-f148-11ea-9808-a5f0372731d0.png)
 
+![image](https://user-images.githubusercontent.com/29897277/92383074-a9fb9d00-f148-11ea-97c2-2c9c94efef63.png)
+
+![image](https://user-images.githubusercontent.com/29897277/92383128-baac1300-f148-11ea-8489-4c8de69f99e5.png)
 
 # Folder Tree
 
@@ -247,7 +252,6 @@ application 객체에 등록한 Blueprint 및 각종 route 함수를 다루고 �
 - **app/modules/**
 
 Flask Application 외의 자체 개발된 외부 모듈을 관리하는 공간입니다. 현재는 Flask 자체와 직접적으로 연관이 없기 때문에 비워두었습니다.
-
 
 
 # References
