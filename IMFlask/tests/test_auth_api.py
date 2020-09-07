@@ -1,20 +1,28 @@
+'''
+Auth API 관련 테스트 케이스
+'''
 import unittest
+import json
 from flask import current_app
 from app import create_app
-import json
 
 
 class AuthAPITestCase(unittest.TestCase):
+    '''Auth 테스트 케이스 클래스'''
     def setUp(self):
+        '''전처리 메소드'''
         self.app = create_app('testing')
         self.app_context = self.app.app_context()
         self.app_context.push()
         self.client = self.app.test_client()
 
     def tearDown(self):
+        '''후처리 메소드'''
         self.app_context.pop()
 
-    def get_api_headers(self, jwt=False):
+    @staticmethod
+    def get_api_headers(jwt=False):
+        '''API Header 생성 메소드'''
         result = {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -24,34 +32,37 @@ class AuthAPITestCase(unittest.TestCase):
 
         return result
 
-    def test_siginin(self):
+    def test_signin(self):
+        '''로그인 API 테스트'''
         resp = self.client.get(
             '/auth/signin',
             headers=self.get_api_headers(),
             json={
-                "user_id":current_app.config['ADMIN_ID'], 
+                "user_id":current_app.config['ADMIN_ID'],
                 "user_pw":current_app.config['ADMIN_PW']
             }
         )
         self.assertEqual(resp.status_code, 200)
 
     def test_siginin_400(self):
+        '''로그인 API 인자 검증 테스트'''
         resp = self.client.get(
             '/auth/signin',
             headers=self.get_api_headers(),
             json={
-                "user_id":current_app.config['ADMIN_ID'], 
+                "user_id":current_app.config['ADMIN_ID'],
                 "user_pw":1
             }
         )
         self.assertEqual(resp.status_code, 400)
 
     def test_signup(self):
+        '''회원가입 API 테스트'''
         resp = self.client.post(
             '/auth/signup',
             headers=self.get_api_headers(),
             json={
-                "user_id":current_app.config['ADMIN_ID'], 
+                "user_id":current_app.config['ADMIN_ID'],
                 "user_pw":current_app.config['ADMIN_PW']
             }
         )
@@ -59,6 +70,7 @@ class AuthAPITestCase(unittest.TestCase):
         self.assertEqual(json_resp['msg'], 'already user')
 
     def test_admin_required(self):
+        '''관리자 검증 데코레이터 테스트'''
         resp = self.client.get(
             '/auth/admin_test',
             headers=self.get_api_headers(jwt=True)
@@ -66,6 +78,7 @@ class AuthAPITestCase(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_login_required(self):
+        '''일반 사용자 검증 데코레이터 테스트'''
         resp = self.client.get(
             '/auth/login_test',
             headers=self.get_api_headers(jwt=True)

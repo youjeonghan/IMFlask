@@ -8,6 +8,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
+    '''공통 Config'''
     SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'hard to guess string')
     TEST_ACCESS_TOKEN = os.environ.get('FLASK_TEST_ACCESS_TOKEN')
 
@@ -28,25 +29,30 @@ class Config:
 
     @staticmethod
     def init_app(app):
+        '''전역 init_app 함수'''
         pass
 
 
 class TestingConfig(Config):
+    '''Test 전용 Config'''
     DEBUG = True
     TESTING = True
 
 
 class DevelopmentConfig(Config):
+    '''개발 환경 전용 Config'''
     DEBUG = True
     TESTING = False
 
 
 class ProductionConfig(Config):
+    ''' 상용환경 전용 Config'''
     DEBUG = False
     TESTING = False
 
     @staticmethod
     def init_app(app):
+        '''로거 등록 및 설정'''
         dictConfig({
             'version': 1,
             'formatters': {

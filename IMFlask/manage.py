@@ -1,16 +1,19 @@
+'''
+Flask Application Manage 코드
+'''
 import os
-import click
 import unittest
+import click
 from app import create_app
 from app.models import init_app
 from app.models.mongodb import get_mongo_cur
-
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 
 @app.shell_context_processor
 def make_shell_context():
+    '''Init shell context'''
     return dict(mongo_cli=get_mongo_cur())
 
 

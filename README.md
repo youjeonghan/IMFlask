@@ -244,6 +244,10 @@ application 객체에 등록한 Blueprint 및 각종 route 함수를 다루고 �
 
 저수준의 DB 드라이버로 구현한 커스템 모델 코드입니다. DB 내의 각 table/collection별로 코드가 나누어져 있고, 이곳에 직접 원하는 쿼리를 작성하고 메소드별로 optimizing을 수행할 수 있습니다. 이를 통해 controller와 마찬가지로 재사용성을 높이고, 단독으로 실행하여 쉽게 디버깅을 진행할 수 있습니다.
 
+- **app/modules/**
+
+Flask Application 외의 자체 개발된 외부 모듈을 관리하는 공간입니다. 현재는 Flask 자체와 직접적으로 연관이 없기 때문에 비워두었습니다.
+
 
 
 # References
