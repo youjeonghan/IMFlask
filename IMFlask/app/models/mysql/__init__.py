@@ -41,6 +41,7 @@ def close_mysql_cur():
 
 
 def mysql_init():
+    '''db-init in MySQL'''
     uri = current_app.config['MYSQL_URI']
     uri = make_url(uri)
     conn = pymysql.connect(
@@ -56,7 +57,7 @@ def mysql_init():
         sql = 'CREATE DATABASE IF NOT EXISTS imldb default CHARACTER SET UTF8;'
         cur.execute(sql)
     conn.commit()
-    conn.select_db("imldb")    
+    conn.select_db("imldb")
 
     with conn.cursor() as cur:
 

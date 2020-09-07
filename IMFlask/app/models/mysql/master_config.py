@@ -4,23 +4,27 @@ MongoDB master_config Collection Model
 
 
 class MasterConfig:
-	
-	def __init__(self, db_conn):
-		self.db_conn = db_conn
-		self.cur = db_conn.cursor()
-		self.table_name = "master_config" 
+    '''master config table'''
+    def __init__(self, db_conn):
+        self.db_conn = db_conn
+        self.cur = db_conn.cursor()
+        self.table_name = "master_config"
 
-	def find_all(self):
-		sql = "SELECT * FROM " + self.table_name
-		self.cur.execute(sql)
-		return self.cur.fetchone()
+    def find_all(self):
+        '''전체 레코드 조회'''
+        sql = "SELECT * FROM " + self.table_name
+        self.cur.execute(sql)
+        return self.cur.fetchone()
 
-	def insert(self, auhtor):
-		sql = "INSERT INTO master_config(author) VALUES (%s);"
-		self.cur.execute(sql, (auhtor,))
+    def insert(self, auhtor):
+        '''레코드 삽입'''
+        sql = "INSERT INTO master_config(author) VALUES (%s);"
+        self.cur.execute(sql, (auhtor,))
 
-	def commit(self):
-		self.db_conn.commit()
+    def commit(self):
+        '''디비 갱신 정보 커밋'''
+        self.db_conn.commit()
 
-	def rollback(self):
-		self.db_conn.rollback()
+    def rollback(self):
+        '''디비 갱신 정보 롤백'''
+        self.db_conn.rollback()

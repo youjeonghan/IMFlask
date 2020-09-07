@@ -1,8 +1,8 @@
 '''
 Redis Management Modules and Models
 '''
-from redis import Redis
 from flask import g, current_app
+from redis import Redis
 
 
 def get_redis_cur(store_g=False):
@@ -34,6 +34,7 @@ def close_redis_cur():
 
 
 def redis_init():
+    '''db-init in redis'''
     cur = get_redis_cur()
     cur.set("__author__", "IML")
     cur.close()

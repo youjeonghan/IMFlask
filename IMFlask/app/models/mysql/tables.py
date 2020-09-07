@@ -1,3 +1,6 @@
+'''
+Mysql Table Create Queries
+'''
 tables = [
 # master_config Table
 '''

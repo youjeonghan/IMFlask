@@ -1,3 +1,6 @@
+'''
+Auth API routes
+'''
 from flask import Blueprint, request, g
 from app.api import input_check
 from app.api.decorators import login_required, admin_required
@@ -10,10 +13,11 @@ auth = Blueprint('auth', __name__)
 
 @auth.route("/signup", methods=['POST'])
 def api_signup():
+    '''회원가입 API'''
     data = request.get_json()
     input_check(data, 'user_id', str)
     input_check(data, 'user_pw', str)
-    if create_user(g.mongo_cur, 
+    if create_user(g.mongo_cur,
                    data['user_id'],
                    data['user_pw']):
         return {"msg":"success"}
@@ -22,6 +26,7 @@ def api_signup():
 
 @auth.route("/signin")
 def api_signin():
+    '''로그인 API'''
     data = request.get_json()
     input_check(data, 'user_id', str)
     input_check(data, 'user_pw', str)
@@ -39,10 +44,12 @@ def api_signin():
 @auth.route("/login_test")
 @login_required
 def api_login_test():
+    '''로그인 테스트 API'''
     return "Hello, " + get_jwt_identity()
 
 
 @auth.route("/admin_test")
 @admin_required
 def api_admin_test():
+    '''관리자 테스트 API'''
     return "Admin, " + get_jwt_identity()

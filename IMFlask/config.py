@@ -30,7 +30,6 @@ class Config:
     @staticmethod
     def init_app(app):
         '''전역 init_app 함수'''
-        pass
 
 
 class TestingConfig(Config):

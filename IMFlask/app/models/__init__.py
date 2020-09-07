@@ -8,9 +8,12 @@ from app.models.redis import redis_init
 
 
 def init_app(app):
+    '''
+    db-init cli command function
+    '''
     mysql_init()
-    sys.stdout.write("Mysql init...OK" + "\n")
+    sys.stdout.write("Mysql init ... OK" + "\n")
     mongo_init()
-    sys.stdout.write("MongoDB init...OK" + "\n")
+    sys.stdout.write("MongoDB init ... OK" + "\n")
     redis_init()
-    sys.stdout.write("Redis init...OK" + "\n")
+    sys.stdout.write("Redis init ... OK" + "\n")

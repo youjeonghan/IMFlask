@@ -3,7 +3,6 @@ MongoDB Management Modules and Models
 '''
 from pymongo import MongoClient
 from flask import g, current_app
-from app.models.mongodb.user import User
 from werkzeug.security import generate_password_hash
 
 
@@ -33,6 +32,9 @@ def close_mongo_cur():
 
 
 def mongo_init():
+    '''
+    db-init cli command in MongoDB
+    '''
     cur = get_mongo_cur()
     db_name = current_app.config['MONGO_DB_NAME']
     col = cur[db_name]['master_config']
@@ -53,5 +55,4 @@ def mongo_init():
         },
         upsert=True
     )
-
     cur.close()

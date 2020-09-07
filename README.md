@@ -248,7 +248,7 @@ application 객체에 등록한 Blueprint 및 각종 route 함수를 다루고 �
 
 Flask Application 외의 자체 개발된 외부 모듈을 관리하는 공간입니다. 현재는 Flask 자체와 직접적으로 연관이 없기 때문에 비워두었습니다.
 
-![image-20200907191136447](C:\Users\User\AppData\Roaming\Typora\typora-user-images\image-20200907191136447.png)
+
 
 # References
 
