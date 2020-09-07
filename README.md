@@ -118,7 +118,7 @@ Windows의 경우, IMLFlask/requirements/env.bat 을 CLI에서 실행시켜 바�
 # Get Started
 
 아래는 Windows 내에서 실행해볼 경우의 방법입니다. 타 OS에서도 같은 맥락으로 실행시켜주시면 됩니다.
-단, 정상적으로 작동되기 위해서는 MySQL, MongoDB, Redis가 모두 연동이 가능해야 합니다.
+**단, 정상적으로 작동되기 위해서는 MySQL, MongoDB, Redis가 모두 연동이 가능해야 합니다.**
 
 ```shell
 # In Windows
