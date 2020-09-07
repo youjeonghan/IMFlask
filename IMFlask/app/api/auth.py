@@ -45,11 +45,11 @@ def api_signin():
 @login_required
 def api_login_test():
     '''로그인 테스트 API'''
-    return "Hello, " + get_jwt_identity()
+    return "Hello, " + g.user_id
 
 
 @auth.route("/admin_test")
 @admin_required
 def api_admin_test():
     '''관리자 테스트 API'''
-    return "Admin, " + get_jwt_identity()
+    return "Admin, " + g.user_id

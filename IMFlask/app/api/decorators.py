@@ -35,6 +35,7 @@ def login_required(func):
         if not user_id or \
            not model.user_id_check(user_id):
             return {"msg": "Bad Access Token"}, 403
+        g.user_id = user_id
         result = func(*args, **kwargs)
         return result
     return wrapper
@@ -51,6 +52,7 @@ def admin_required(func):
            not model.user_id_check(user_id) or \
            user_id != current_app.config['ADMIN_ID']:
             return {"msg": "Bad Access Token"}, 403
+        g.user_id = user_id
         result = func(*args, **kwargs)
         return result
     return wrapper
