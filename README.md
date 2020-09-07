@@ -9,6 +9,8 @@
 
 # Concept
 
+
+
 ### Application Factory
 
 어플리케이션은 개발(development), 테스팅(Testing), 상용(Production) Level에서 다르게 동작해야 합니다. 따라서 실행하고자 하는 환경에 따라 config를 다르게 주입시키는 애플리케이션 팩토리를 구현했습니다.
@@ -44,8 +46,11 @@ Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니
 모든 웹 어플리케이션 서버는 최종적으로 api 로직을 다루는 view(혹은 route) 함수단이 핵심이 되며, 가장 코드의 양이 비대해질 수 밖에 없습니다. 따라서 최대한 해당 로직의 코드를 분할시키기 위해, View, Controller, Model로 코드의 특징을 나누어 설계하였습니다. 이럴 경우, 다음과 같은 이점이 발생합니다.
 
 - **View(route) function**이 굉장히 심플해집니다. client 단에서 전송된 input Parameters를 받고 validate한 후, Controller 단의 function를 호출해서 반환받은 값을 return하면 끝.
+
 - 다른 API지만, 종종 같은 query, 같은 로직을 사용하는 경우가 존재합니다. 이 경우, **controller**를 독립적으로 뽑아내서 각각의 api에 대한 재사용성을 높일 수 있습니다.
+
 - 저수준의 DB 드라이버를 사용하는 만큼의 코드 사이사이에 query가 난무한다면 굉장히 코드에 대한 가독성이 떨어질 수 있습니다. 따라서 **커서를 인자로 받아서 동작하는 커스텀 클래스(유사 모델?)을 구현**하여, 최대한 위의 3가지를 분리시키도록 했습니다.
+  
   
 
 ### 딱히 REST API는 아닙니다
@@ -138,47 +143,106 @@ $ flask test
 
 
 
-
-
-# Directories
+# Folder Tree
 
 해당 코드는 다음과 같은 디렉터리 구조를 가집니다.
 
 ```
-/
-.git/
-.gitignore
-requirements/
-LICENSE
-README.md
-IMFlask/
-	manage.py
-	config.py
-	tests/
-	modules/
-	app/
-		__init__.py
-		decorator.py
-		client/
-		templates/
-		static/
-		models/
-			mongodb/
-			mysql/
-			redis/
-		controllers/
-		api/
-			auth.py
-			v1/
+   IMFlask
+		│  config.py
+		│  manage.py
+		│  wsgi.ini
+		│  wsgi.py
+		│
+		├─app
+		│  │  __init__.py
+		│  │
+		│  ├─api
+		│  │  │  auth.py
+		│  │  │  decorators.py
+		│  │  │  errors.py
+		│  │  │  template.py
+		│  │  │  __init__.py
+		│  │  │
+		│  │  └─v1
+		│  │        author.py
+		│  │        __init__.py
+		│  │
+		│  ├─client
+		│  │      __init__.py
+		│  │
+		│  ├─controllers
+		│  │      author_con.py
+		│  │      user_con.py
+		│  │      __init__.py
+		│  │
+		│  ├─models
+		│  │  │  __init__.py
+		│  │  │
+		│  │  ├─mongodb
+		│  │  │      master_config.py
+		│  │  │      user.py
+		│  │  │      __init__.py
+		│  │  │
+		│  │  ├─mysql
+		│  │  │      master_config.py
+		│  │  │      tables.py
+		│  │  │      __init__.py
+		│  │  │
+		│  │  └─redis
+		│  │          redis_model.py
+		│  │          __init__.py
+		│  │
+		│  ├─static
+		│  │      __init__.py
+		│  │
+		│  └─templates
+		│          index.html
+		│          __init__.py
+		│
+		├─modules
+		│      __init__.py
+		│
+		└─tests
+		        test_author_api.py
+		        test_auth_api.py
+		        test_basics.py
+		        __init__.py
 ```
 
-- manage.py
-- config.py
-- app/__ init __.py
-- app/templates, app/static, app/client
-- app/api/
-- app/controllers/
-- app/models/
+- **manage.py**
+
+flask 웹 어플리케이션을 실행시키기 위한 메인 코드입니다. flask application 객체를 생성하고, 각종 shell context 설정 및 cli command 설정을 담당합니다.
+
+- **config.py**
+
+어플리케이션 구동시, OS에 저장된 환경변수를 기반으로 Config를 작성하는 코드입니다. 상황에 맞게 적절한 config를 app 객체에 주입할 수 있도록 합니다.
+
+- **app/__ init __.py**
+
+어플리케이션의 중심이 되는 application 객체를 생성하는 곳입니다. 입력된 인자를 바탕으로 각 환경에 맞는 config를 주입하고, flask extension 및 초기 설정 초기화 및 app/api/에 있는 코드를 불러와 URL mapping을 수행합니다.
+
+- **app/templates, app/static, app/client**
+
+template 및 static 파일을 다루는 경로입니다. flask structure 자체에는 직접적인 연관이 없기 때문에, 일단 비워놓았습니다.
+
+- **app/api/**
+
+application 객체에 등록한 Blueprint 및 각종 route 함수를 다루고 있습니다. 
+
+1. 해당 api 카테고리의 요구사항이 작을 경우, **auth.py**와 같이 단일 파일로 다룰 수 있습니다.
+2. 만약 요구사항이 많을 경우, **app/api/v1/**의 형태로 내부를 더 구조화하여 다룰 수 있습니다.
+3. **errors.py**는 각종 에러 핸들러를 관리합니다.
+4. **decorators.py**는 route 함수의 공통적인 기능을 묶어 커스텀 데코레이터를 구현하였습니다.
+5. **template.py**는 html template을 호출하는 API들을 모아놓은 곳 입니다.
+
+- **app/controllers/**
+
+본래 route(app/api/)에 다루어야 할 핵심 로직 코드를 옮겨놓은 곳입니다. 이를 통해 각 controller 함수들의 재사용성을 높일 수 있고, 단독적으로 실행하여 쉽게 디버깅을 진행할 수 있습니다. 
+
+- **app/models/**
+
+저수준의 DB 드라이버로 구현한 커스템 모델 코드입니다. DB 내의 각 table/collection별로 코드가 나누어져 있고, 이곳에 직접 원하는 쿼리를 작성하고 메소드별로 optimizing을 수행할 수 있습니다. 이를 통해 controller와 마찬가지로 재사용성을 높이고, 단독으로 실행하여 쉽게 디버깅을 진행할 수 있습니다.
 
 
 
