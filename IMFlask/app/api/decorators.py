@@ -7,6 +7,7 @@ from flask import current_app, g
 from app.models.mongodb.user import User
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 
+
 def timer(func):
     '''API 시간 측정 데코레이터'''
     @wraps(func)
@@ -35,6 +36,7 @@ def login_required(func):
         if not user_id or \
            not model.user_id_check(user_id):
             return {"msg": "Bad Access Token"}, 403
+        # TO DO: 아예 유저 인포를 던지는게 나을라나?
         g.user_id = user_id
         result = func(*args, **kwargs)
         return result
@@ -52,6 +54,7 @@ def admin_required(func):
            not model.user_id_check(user_id) or \
            user_id != current_app.config['ADMIN_ID']:
             return {"msg": "Bad Access Token"}, 403
+        # TO DO: 아예 유저 인포를 던지는게 나을라나?
         g.user_id = user_id
         result = func(*args, **kwargs)
         return result
