@@ -87,7 +87,8 @@ Windows의 경우, IMLFlask/requirements/env.bat 을 CLI에서 실행시켜 바�
   MySQL 서버에 접속하기 위한 Database URI입니다.
 
 - **FLASK_MONGO_URI**
-  MongoDB 서버에 접속하기 위한 Database URI입니다. 
+
+MongoDB 서버에 접속하기 위한 Database URI입니다. 
 
 - **FLASK_MONGO_DB_NAME**
 
