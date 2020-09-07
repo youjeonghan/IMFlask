@@ -1,4 +1,5 @@
 from flask import g, request
+from app.api import input_check
 from app.api.v1 import api_v1 as api
 from app.api.decorators import timer
 from app.controllers.author_con import get_author_with_mongo
@@ -7,21 +8,22 @@ from app.controllers.author_con import insert_author_with_mysql
 from app.controllers.author_con import get_author_with_redis
 
 
-@api.route('/author/mysql', methods=['GET', 'PUT'])
+@api.route('/author/mysql', methods=['GET', 'POST'])
 @timer
 def apiv1_get_author_with_mysql():
-    # GET
+    data = request.get_json()
+    
     if request.method == "GET":
         return {
             "msg": "success",
             "result": get_author_with_mysql(g.mysql_cur)
         }
     
-    # PUT
-    data = request.get_json()
-    insert_author_with_mysql(g.mysql_cur, 
-                             data['author'])
-    return {}, 204
+    elif request.method == "POST":
+        input_check(data, 'author', str)
+        insert_author_with_mysql(g.mysql_cur, 
+                                 data['author'])
+        return {}, 204
 
 
 @api.route('/author/mongodb')

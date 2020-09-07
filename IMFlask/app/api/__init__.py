@@ -1,6 +1,7 @@
 '''
 API Main Handler
 '''
+from flask import abort
 from app.models.mysql import get_mysql_cur, close_mysql_cur
 from app.models.mongodb import get_mongo_cur, close_mongo_cur
 from app.models.redis import get_redis_cur, close_redis_cur 
@@ -31,3 +32,10 @@ def init_app(app):
     @app.teardown_appcontext
     def teardown_appcontext(exception):
         pass
+
+
+def input_check(data, key, value_type):
+    if key not in data:
+        abort(400, description="'%s' not in data." % key)
+    if not isinstance(data[key], value_type):
+        abort(400, description="'%s' must be '%s' type." % (key, str(value_type)))

@@ -1,4 +1,5 @@
 from flask import Blueprint, request, g
+from app.api import input_check
 from app.api.decorators import login_required, admin_required
 from app.controllers.user_con import create_user
 from app.controllers.user_con import signin
@@ -10,6 +11,8 @@ auth = Blueprint('auth', __name__)
 @auth.route("/signup", methods=['POST'])
 def api_signup():
     data = request.get_json()
+    input_check(data, 'user_id', str)
+    input_check(data, 'user_pw', str)
     if create_user(g.mongo_cur, 
                    data['user_id'],
                    data['user_pw']):
@@ -17,9 +20,11 @@ def api_signup():
     return {"msg":"already user"}
 
 
-@auth.route("/signin", methods=['POST'])
+@auth.route("/signin")
 def api_signin():
     data = request.get_json()
+    input_check(data, 'user_id', str)
+    input_check(data, 'user_pw', str)
     result = signin(g.mongo_cur,
                     data['user_id'],
                     data['user_pw'])

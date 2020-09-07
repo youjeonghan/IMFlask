@@ -26,7 +26,7 @@ class AuthorAPITestCase(unittest.TestCase):
     	self.assertEqual(resp.status_code, 200)
 
     def test_author_mysql_put(self):
-    	resp = self.client.put(
+    	resp = self.client.post(
     		'/api/v1/author/mysql',
     		json={"author":"test"})
     	self.assertEqual(resp.status_code, 204)

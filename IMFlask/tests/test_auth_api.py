@@ -25,7 +25,7 @@ class AuthAPITestCase(unittest.TestCase):
         return result
 
     def test_siginin(self):
-        resp = self.client.post(
+        resp = self.client.get(
             '/auth/signin',
             headers=self.get_api_headers(),
             json={
@@ -34,6 +34,17 @@ class AuthAPITestCase(unittest.TestCase):
             }
         )
         self.assertEqual(resp.status_code, 200)
+
+    def test_siginin_400(self):
+        resp = self.client.get(
+            '/auth/signin',
+            headers=self.get_api_headers(),
+            json={
+                "user_id":current_app.config['ADMIN_ID'], 
+                "user_pw":1
+            }
+        )
+        self.assertEqual(resp.status_code, 400)
 
     def test_signup(self):
         resp = self.client.post(
