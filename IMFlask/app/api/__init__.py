@@ -1,5 +1,5 @@
 '''
-API 메인 핸들러 및 Util
+API rquest handler and Util
 '''
 from flask import abort, g, current_app, request
 from app.models.mysql import get_mysql_cur, close_mysql_cur
@@ -8,7 +8,8 @@ from app.models.redis import get_redis_cur, close_redis_cur
 
 
 def init_app(app):
-    '''api pre handler 초기화'''
+    '''api request handler 초기화'''
+    
     @app.before_first_request
     def before_first_request():
         '''맨 처음 리퀘스트가 오기 전에'''
