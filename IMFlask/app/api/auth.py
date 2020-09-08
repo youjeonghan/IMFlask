@@ -6,7 +6,6 @@ from app.api import input_check
 from app.api.decorators import login_required, admin_required
 from app.controllers.user_con import create_user
 from app.controllers.user_con import signin
-from flask_jwt_extended import get_jwt_identity
 
 auth = Blueprint('auth', __name__)
 

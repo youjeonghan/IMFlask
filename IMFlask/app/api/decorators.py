@@ -14,13 +14,13 @@ def timer(func):
     def wrapper(*args, **kwargs):
         process_time = time()
         result = func(*args, **kwargs)
-        process_time = time() - process_time
+        g.process_time = time() - process_time
 
         if current_app.config['DEBUG']:
             if isinstance(result, tuple):
-                result[0]['process_time'] = process_time
+                result[0]['process_time'] = g.process_time
             else:
-                result['process_time'] = process_time
+                result['process_time'] = g.process_time
 
         return result
     return wrapper

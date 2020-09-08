@@ -1,7 +1,7 @@
 '''
-API Main Handler
+API 메인 핸들러 및 Util
 '''
-from flask import abort
+from flask import abort, g, current_app, request
 from app.models.mysql import get_mysql_cur, close_mysql_cur
 from app.models.mongodb import get_mongo_cur, close_mongo_cur
 from app.models.redis import get_redis_cur, close_redis_cur
@@ -15,19 +15,27 @@ def init_app(app):
 
     @app.before_request
     def before_request():
-        '''리퀘스트가 오기 전에'''
+        '''HTTP 요청이 들어올때 마다'''
         get_mysql_cur(store_g=True)
         get_mongo_cur(store_g=True)
         get_redis_cur(store_g=True)
 
     @app.after_request
     def after_request(response):
-        '''정상 작동시, 리스폰스를 보내기 전에'''
+        '''HTTP 요청이 끝나고 브라우저에 응답하기 전에'''
+        if 'process_time' in g and \
+        g.process_time >= current_app.config['SLOW_API_TIME']:
+            log_str = "\n!!! SLOW API DETECTED !!! \n" + \
+                      "ip: " + request.remote_addr + "\n" + \
+                      "url: " + request.full_path + "\n" + \
+                      "input_json: " + str(request.get_json()) + "\n" + \
+                      "slow time: " + str(g.process_time) + "\n"
+            app.logger.warning(log_str)
         return response
 
     @app.teardown_request
     def teardown_request(exception):
-        '''비정상 작동시, 리스폰스를 보내기 전에'''
+        '''HTTP 요청이 끝나고 브라우저에 응답하기 전에'''
         close_mysql_cur()
         close_mongo_cur()
         close_redis_cur()

@@ -7,10 +7,11 @@ from flask_cors import CORS
 from config import config
 from app import api
 
-from app.api.template import template as template_bp
 from app.api.auth import auth as auth_bp
 from app.api.v1 import api_v1 as api_v1_bp
-from app.api.errors import errors as error_bp
+from app.api.template import template as template_bp
+from app.api.error_handler import error_handler as error_bp
+
 
 jwtmanager = JWTManager()
 cors = CORS()
