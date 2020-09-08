@@ -9,7 +9,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     '''공통 Config'''
-    SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'hard to guess string')
+    JWT_SECRET_KEY = os.environ.get('FLASK_JWT_SECRET_KEY')
     TEST_ACCESS_TOKEN = os.environ.get('FLASK_TEST_ACCESS_TOKEN')
 
     ADMIN_ID = os.environ.get('FLASK_ADMIN_ID', "iml")
