@@ -19,24 +19,14 @@ class AuthorAPITestCase(unittest.TestCase):
         '''후처리 메소드'''
         self.app_context.pop()
 
-    def test_author_mongodb(self):
-        '''Get Author in MongoDB API 테스트'''
-        resp = self.client.get('/api/v1/author/mongodb')
-        self.assertEqual(resp.status_code, 200)
-
     def test_author_mysql(self):
         '''Get Author in Mysql API 테스트'''
-        resp = self.client.get('/api/v1/author/mysql')
+        resp = self.client.get('/api/v1/author')
         self.assertEqual(resp.status_code, 200)
 
-    def test_author_redis(self):
-        '''Get Author in Redis API 테스트'''
-        resp = self.client.get('/api/v1/author/redis')
-        self.assertEqual(resp.status_code, 200)
-
-    def test_author_mysql_put(self):
+    def test_author_mysql_post(self):
         '''Insert Author in Mysql API 테스트'''
         resp = self.client.post(
-            '/api/v1/author/mysql',
+            '/api/v1/author',
             json={"author":"test"})
         self.assertEqual(resp.status_code, 204)

@@ -3,7 +3,7 @@ Auth API routes
 '''
 from flask import Blueprint, request, g
 from app.api import input_check
-from app.api.decorators import login_required, admin_required
+from app.api.decorators import login_required, admin_required, login_optional
 from app.controllers.user_con import create_user
 from app.controllers.user_con import signin
 
@@ -16,7 +16,7 @@ def api_signup():
     data = request.get_json()
     input_check(data, 'user_id', str)
     input_check(data, 'user_pw', str)
-    if create_user(g.mongo_cur,
+    if create_user(g.mysql_cur,
                    data['user_id'],
                    data['user_pw']):
         return {"msg":"success"}
@@ -29,7 +29,7 @@ def api_signin():
     data = request.get_json()
     input_check(data, 'user_id', str)
     input_check(data, 'user_pw', str)
-    result = signin(g.mongo_cur,
+    result = signin(g.mysql_cur,
                     data['user_id'],
                     data['user_pw'])
     if not result:
@@ -44,11 +44,18 @@ def api_signin():
 @login_required
 def api_login_test():
     '''로그인 테스트 API'''
-    return "Hello, " + g.user_id
+    return "Hello, " + str(g.user_id)
+
+
+@auth.route("/login_optional_test")
+@login_optional
+def api_login_optional_test():
+    '''로그인 옵셔널 테스트 API'''
+    return "Hello, " + str(g.user_id)
 
 
 @auth.route("/admin_test")
 @admin_required
 def api_admin_test():
     '''관리자 테스트 API'''
-    return "Admin, " + g.user_id
+    return "Admin, " + str(g.user_id)

@@ -4,6 +4,7 @@ MySQL Management Modules and Models
 import pymysql
 from sqlalchemy.engine.url import make_url
 from flask import g, current_app
+from werkzeug.security import generate_password_hash
 from app.models.mysql.tables import tables
 
 def get_mysql_cur(store_g=True):
@@ -54,13 +55,14 @@ def mysql_init():
 
     with conn.cursor() as cur:
         # Create DB
-        sql = 'CREATE DATABASE IF NOT EXISTS imldb default CHARACTER SET UTF8;'
+        sql = '''
+            CREATE DATABASE IF NOT EXISTS imldb default CHARACTER SET UTF8;
+        '''
         cur.execute(sql)
     conn.commit()
     conn.select_db("imldb")
 
     with conn.cursor() as cur:
-
         # Create Tables
         for sql in tables:
             cur.execute(sql)
@@ -72,5 +74,16 @@ def mysql_init():
             INSERT INTO master_config(author) VALUES ('IML');
         '''
         cur.execute(sql)
+        # Create ADMIN Data
+        sql = '''
+            INSERT INTO user(id, pw) VALUES (%s, %s);
+        '''
+        cur.execute(sql, 
+            (
+                current_app.config['ADMIN_ID'], 
+                generate_password_hash(current_app.config['ADMIN_PW'])
+            )
+        )
+
     conn.commit()
     conn.close()

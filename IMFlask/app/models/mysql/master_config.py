@@ -1,10 +1,11 @@
 '''
-MongoDB master_config Collection Model
+MySQL master_config Collection Model
 '''
 
 
 class MasterConfig:
     '''master config table'''
+    
     def __init__(self, db_conn):
         self.db_conn = db_conn
         self.cur = db_conn.cursor()
@@ -12,13 +13,15 @@ class MasterConfig:
 
     def find_all(self):
         '''전체 레코드 조회'''
-        sql = "SELECT * FROM " + self.table_name
+        sql = "SELECT * FROM {table}"
+        sql = sql.format(table=self.table_name)
         self.cur.execute(sql)
         return self.cur.fetchone()
 
     def insert(self, auhtor):
         '''레코드 삽입'''
-        sql = "INSERT INTO master_config(author) VALUES (%s);"
+        sql = "INSERT INTO {table}(author) VALUES (%s);"
+        sql = sql.format(table=self.table_name)
         self.cur.execute(sql, (auhtor,))
 
     def commit(self):

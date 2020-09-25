@@ -84,3 +84,19 @@ class AuthAPITestCase(unittest.TestCase):
             headers=self.get_api_headers(jwt=True)
         )
         self.assertEqual(resp.status_code, 200)
+
+    def test_login_optional_1(self):
+        '''일반 사용자 optional1 검증 데코레이터 테스트'''
+        resp = self.client.get(
+            '/auth/login_optional_test',
+            headers=self.get_api_headers(jwt=False)
+        )
+        self.assertEqual(resp.status_code, 200)
+
+    def test_login_optional_2(self):
+        '''일반 사용자 optional2 검증 데코레이터 테스트'''
+        resp = self.client.get(
+            '/auth/login_optional_test',
+            headers=self.get_api_headers(jwt=True)
+        )
+        self.assertEqual(resp.status_code, 200)

@@ -3,13 +3,6 @@ set FLASK_TEST_ACCESS_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1OTk
 
 set FLASK_MYSQL_URI=mysql://root:imiml@localhost:3306/imldb
 
-set FLASK_MONGO_URI=mongodb://localhost:27017
-set FLASK_MONGO_DB_NAME=imldb
-
-set FLASK_REDIS_HOST=127.0.0.1
-set FLASK_REDIS_PORT=6379
-set FLASK_REDIS_PW=imlisgod
-
 set FLASK_ADMIN_ID=iml
 set FLASK_ADMIN_PW=iml
 

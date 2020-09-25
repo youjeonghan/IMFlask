@@ -1,7 +1,7 @@
 '''
 auth/user controller
 '''
-from app.models.mongodb.user import User
+from app.models.mysql.user import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 
@@ -20,11 +20,11 @@ def signin(mongo_cur, user_id, user_pw):
     '''유저 회원가입 컨트롤러'''
     model = User(mongo_cur)
     user = model.get_info(user_id)
-    
+
     if not user:
         return False
     
-    elif not check_password_hash(user['user_pw'], user_pw):
+    elif not check_password_hash(user['pw'], user_pw):
         return False
     
     return {

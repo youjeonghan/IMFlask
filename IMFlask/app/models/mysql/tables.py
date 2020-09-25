@@ -10,4 +10,11 @@ tables = [
         PRIMARY KEY(id)
     );
 ''',
+'''
+    CREATE TABLE IF NOT EXISTS user (
+        id VARCHAR(200) NOT NULL,
+        pw VARCHAR(200) NOT NULL,
+        PRIMARY KEY(id)
+    );
+''',
 ]
