@@ -92,22 +92,6 @@ Windows의 경우, IMLFlask/requirements/env.bat 을 CLI에서 실행시켜 바�
 
   MySQL 서버에 접속하기 위한 Database URI입니다.
 
-- **FLASK_MONGO_URI**
-
-MongoDB 서버에 접속하기 위한 Database URI입니다. 
-
-- **FLASK_MONGO_DB_NAME**
-
-  MongoDB에서 사용할 DB 이름입니다. 
-
-- **FLASK_REDIS_HOST**
-
-  Redis 서버의 Host IP입니다.
-
-- **FLASK_REDIS_PW**
-
-  Redis 서버에 접속하기 위한 패스워드입니다.
-
 - **FLASK_CONFIG**
 
   어떤 config 데이터를 주입시킬지 결정하는 값입니다. (development / production / testing)
