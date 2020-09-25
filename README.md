@@ -1,5 +1,5 @@
 # IMFlask
-**Large Scale Web Backend Structure for Flask (Edited at 2020-09-07)** 
+**Large Scale Web Backend Structure for Flask (Edited at 2020-09-25)** 
 
 공부하는 내용을 정리하는 겸, Flask를 사용하여 대규모 어플리케이션 서버를 구축한다고 가정했을 때의 baseline 코드를 구현한 것입니다. 
 
@@ -38,6 +38,8 @@ Flask extension는 유용하지만 몇가지 문제가 있다고 생각했습니
 ### 저수준의 DB 드라이버를 사용하자
 
 해당 코드는 RDBMS, NoSQL(Document based, Key-value based) 등의 **총 3가지의 DB(MySQL, MongoDB, Redis)**와 연동한 예제 코드가 작성되어 있습니다. 
+
+단, 해당 repo는 MySQL 서버만 실행중일 경우, 실행이 가능합니다.
 
 모든 DB단 연동 코드에는 **ORM, ODM과 같은 Database Abstraction Module을 사용하지 않았습니다.**
 
